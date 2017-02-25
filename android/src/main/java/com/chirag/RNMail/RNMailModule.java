@@ -79,14 +79,18 @@ public class RNMailModule extends ReactContextBaseJavaModule {
     }
 
     if (options.hasKey("attachment") && !options.isNull("attachment")) {
-      ReadableMap attachment = options.getMap("attachment");
-      if (attachment.hasKey("path") && !attachment.isNull("path")) {
-        String path = attachment.getString("path");
-        File file = new File(path);
-        Uri p = Uri.fromFile(file);
-        i.putExtra(Intent.EXTRA_STREAM, p);
-      }
+      i.putExtra(Intent.EXTRA_STREAM, Uri.parse(options.getMap("attachment").getString("path")));
     }
+    
+    //if (options.hasKey("attachment") && !options.isNull("attachment")) {
+    //  ReadableMap attachment = options.getMap("attachment");
+    //  if (attachment.hasKey("path") && !attachment.isNull("path")) {
+    //    String path = attachment.getString("path");
+    //    File file = new File(path);
+    //    Uri p = Uri.fromFile(file);
+    //    i.putExtra(Intent.EXTRA_STREAM, p);
+    //  }
+    //}
 
     PackageManager manager = reactContext.getPackageManager();
     List<ResolveInfo> list = manager.queryIntentActivities(i, 0);
